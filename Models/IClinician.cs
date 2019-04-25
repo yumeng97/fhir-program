@@ -7,5 +7,7 @@ namespace project.Models
 {
     interface IClinician : IUser
     {
+    //    void StartMonitoring(string patientId);
+    //    void StopMonitoring(string patientId);
     }
 }
