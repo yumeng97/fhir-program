@@ -5,8 +5,12 @@ using System.Threading.Tasks;
 
 namespace project.Models
 {
-    interface IUser
+    public interface IUser
     {
-        
+        string Gender { get; set; }
+        string Id { get; set; }
+        Name Name { get; set; }
+        Address Address { get; set; }
+        DateTime LastUpdated { get; set; }
     }
 }
