@@ -7,12 +7,12 @@ using Newtonsoft.Json.Linq;
 using project.Models;
 
 
-namespace project.WebQuery
+namespace project.Queries
 {
-    public static class PatientQuery
+    public class PatientQuery
     {
-        private static readonly HttpClient client = new HttpClient();
-        private static readonly string HOME_PAGE = "http://hapi-fhir.erc.monash.edu:8080/baseDstu3/";
+        private readonly HttpClient client = new HttpClient();
+        private readonly string HOME_PAGE = "http://hapi-fhir.erc.monash.edu:8080/baseDstu3/";
 
         //public async Task<Patient> GetPatientAsync(string para)
         //{
@@ -20,9 +20,9 @@ namespace project.WebQuery
         //    {
         //        para = "";
         //    }
-            
+
         //    var responseString = await client.GetStringAsync(HOME_PAGE + para);
-        //    var patient = JObject.Parse(responseString)[]
+        //    JObject patient = JObject.Parse(responseString);
         //    return JObject.Parse(responseString);
         //}
 
@@ -32,10 +32,41 @@ namespace project.WebQuery
         //    {
         //        para = "";
         //    }
-
         //    var responseString = await client.GetStringAsync(HOME_PAGE + para);
-        //    return JObject.Parse(responseString);
+        //    return Models.JObject.Parse(responseString);
         //}
+
+    }
+
+    public class PractitionerQuery
+    {
+        private readonly HttpClient client = new HttpClient();
+        private readonly string PRACTITIONER_PAGE = "http://hapi-fhir.erc.monash.edu:8080/baseDstu3/Practitioner";
+
+        public async Task<IPractitioner> GetPractitionerAsync(string para)
+        {
+            PractitionerParser practitionerParser = new PractitionerParser();
+            if (para == null)
+            {
+                para = "";
+            }
+            var responseString = await client.GetStringAsync(PRACTITIONER_PAGE + para);
+            return practitionerParser.Parse(JObject.Parse(responseString));
+        }
+
+        public async Task<IEnumerable<IPractitioner>> GetPractitionersAsync()
+        {
+            var responseString = await client.GetStringAsync(PRACTITIONER_PAGE);
+            var jObject = JObject.Parse(responseString);
+            var practitioners = new List<IPractitioner>();
+            var array = jObject["entry"].Children<JObject>();
+            foreach (var o in array)
+            {
+                PractitionerParser practitionerParser = new PractitionerParser();
+                practitioners.Add(practitionerParser.Parse((JObject) o["resource"]));
+            }
+            return practitioners;
+        }
 
     }
 }

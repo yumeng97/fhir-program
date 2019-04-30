@@ -71,7 +71,6 @@ namespace project.Models
     public class PractitionerBuilder
     {
         private IPractitioner Practitioner = new Practitioner();
-
         public PractitionerBuilder SetId(string id)
         {
             Practitioner.Id = id;

@@ -1,0 +1,26 @@
+﻿<template>
+    <div>
+        <h1>List of Practitioner</h1>
+
+        <table v-if="practitioners.length" class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Marital</th>
+                    <th>Gender</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in practitioners">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.active }}</td>
+                    <td>{{ item.gender }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p v-else><em>Loading...</em></p>
+    </div>
+</template>
+
+<script src="./class.ts"></script>
