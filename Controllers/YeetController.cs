@@ -9,12 +9,12 @@ using project.Services;
 namespace project.Controllers
 {
     [Route("api/[controller]")]
-    public class YeetController : Controller
+    public class PractitionerController : Controller
     {
         private readonly PractitionerService practitionerService = new PractitionerService();
 
-        [HttpGet("[action]/{id}")]
-        public async Task<IEnumerable<IPractitioner>> Yeeting(int id)
+        [HttpGet("[action]")]
+        public async Task<IEnumerable<IPractitioner>> ShowAll()
         {
             return await practitionerService.GetAll();
         }

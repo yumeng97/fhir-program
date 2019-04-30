@@ -12,7 +12,7 @@ export default class FetchDataComponent extends Vue {
     practitioners: Practitioner[] = [];
 
     mounted() {
-        fetch('api/Yeet/Yeeting/3')
+        fetch('api/Practitioner/ShowAll')
             .then(response => response.json() as Promise<Practitioner[]>)
             .then(data => {
                 this.practitioners = data;
