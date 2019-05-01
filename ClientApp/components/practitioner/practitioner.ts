@@ -3,7 +3,7 @@ import { Component } from 'vue-property-decorator';
 
 interface Practitioner {
     Id: string,
-    MaritalStatus: string,
+    isActive: string,
     Gender: string
 }
 

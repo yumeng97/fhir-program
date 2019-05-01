@@ -1,0 +1,22 @@
+﻿<template>
+    <div>
+        <h1>List of Reports</h1>
+
+        <table v-if="reports.length" class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in reports">
+                    <td>{{ item.id }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p v-else><em>Loading...</em></p>
+    </div>
+</template>
+
+<script src="./report.ts"></script>

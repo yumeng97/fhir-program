@@ -69,4 +69,13 @@ namespace project.Queries
         }
 
     }
+
+    public class DiagnosticReportQuery
+    {
+        private readonly HttpClient client = new HttpClient();
+        private readonly string REPORT_PAGE = "http://hapi-fhir.erc.monash.edu:8080/baseDstu3/DiagnosticReport";
+
+        //just going to try and see if i am able to get a response from server
+
+    }
 }
