@@ -25,7 +25,6 @@ module.exports = (env) => {
             filename: '[name].js',
             publicPath: 'dist/'
         },
-        externals: ['axios'],
         plugins: [
             new CheckerPlugin(),
             new webpack.DefinePlugin({
