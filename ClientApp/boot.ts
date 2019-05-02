@@ -8,7 +8,8 @@ const routes = [
     { path: '/', component: require('./components/home/home.vue.html') },
     //{ path: '/counter', component: require('./components/counter/counter.vue.html') },
     //{ path: '/fetchdata', component: require('./components/fetchdata/fetchdata.vue.html') },
-    { path: '/practitionerlist', component: require('./components/practitionerlist/practitionerlist.vue.html') }
+    { path: '/practitionerlist', component: require('./components/practitionerlist/practitionerlist.vue.html') },
+    { path: '/practitioner/:id', component: require('./components/practitioner/practitioner.vue.html') }
 ];
 
 new Vue({

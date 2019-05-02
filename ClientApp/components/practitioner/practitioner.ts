@@ -1,35 +1,39 @@
-﻿import Vue from 'vue';
+import Vue from 'vue';
 import axios from 'axios';
 import { Component } from 'vue-property-decorator';
 
-interface PractitionerList {
+interface Practitioner {
     Id: string,
+    name: string
     isActive: string,
-    Gender: string
+    Gender: string,
+    address: string,
+    lastUpdated: string
 }
 
 @Component
 export default class PractitionerListComponent extends Vue {
-    practitioners: PractitionerList[] = [];
-
-    mounted() {
-        this.getPractitioners();
+    practitioner: Practitioner = <Practitioner>{
+        Id: "",
+        isActive: "",
+        Gender: ""
     }
 
-    getPractitioners() {
+    mounted() {
+        this.getPractitioner(this.$route.params.id);
+    }
+
+    getPractitioner(id: string) {
+        let url = 'api/Practitioner/Get/' + id;
         axios({
             method: 'get',
-            url: 'api/Practitioner/ShowAll'
+            url: url
         }).then((response: any) => {
             console.log(response.data);
-            this.practitioners = response.data;
+            this.practitioner = response.data;
         })
             .catch((error: any) => {
                 console.log(error);
             });
-    }
-
-    getThis(id: string) {
-        this.$router.push('/practitioner/' + id);
     }
 }
