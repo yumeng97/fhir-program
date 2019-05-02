@@ -1,6 +1,5 @@
 ﻿<template>
     <div>
-        <h1>List of Practitioner</h1>
 
         <table v-if="practitioners.length" class="table">
             <thead>
@@ -15,6 +14,9 @@
                     <td>{{ item.id }}</td>
                     <td>{{ item.active }}</td>
                     <td>{{ item.gender }}</td>
+                    <td>
+                        <button @click="getPractitioner(item.id)" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"></button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -23,4 +25,4 @@
     </div>
 </template>
 
-<script src="./practitioner.ts"></script>
+<script src="./practitionerlist.ts"></script>

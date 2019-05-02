@@ -43,27 +43,32 @@ namespace project.Queries
         private readonly HttpClient client = new HttpClient();
         private readonly string PRACTITIONER_PAGE = "http://hapi-fhir.erc.monash.edu:8080/baseDstu3/Practitioner";
 
-        public async Task<IPractitioner> GetPractitionerAsync(string para)
-        {
-            PractitionerParser practitionerParser = new PractitionerParser();
-            if (para == null)
-            {
-                para = "";
-            }
-            var responseString = await client.GetStringAsync(PRACTITIONER_PAGE + para);
-            return practitionerParser.Parse(JObject.Parse(responseString));
-        }
+        //public async Task<IPractitioner> GetPractitionerAsync(string para)
+        //{
+        //    PractitionerParser practitionerParser = new PractitionerParser();
+        //    if (para == null)
+        //    {
+        //        para = "";
+        //    }
+        //    var responseString = await client.GetStringAsync(PRACTITIONER_PAGE + para);
+        //    return practitionerParser.Parse(JObject.Parse(responseString)["entry"]);
+        //}
 
-        public async Task<IEnumerable<IPractitioner>> GetPractitionersAsync()
+        public async Task<IEnumerable<IPractitioner>> GetPractitionersAsync(string para = "")
         {
-            var responseString = await client.GetStringAsync(PRACTITIONER_PAGE);
+            var responseString = await client.GetStringAsync(PRACTITIONER_PAGE + para);
             var jObject = JObject.Parse(responseString);
             var practitioners = new List<IPractitioner>();
             var array = jObject["entry"].Children<JObject>();
             foreach (var o in array)
             {
                 PractitionerParser practitionerParser = new PractitionerParser();
-                practitioners.Add(practitionerParser.Parse((JObject) o["resource"]));
+                var toParse = (JObject) o["resource"];
+                var checkProperty = toParse.ContainsKey("address");
+                if (checkProperty)
+                {
+                    practitioners.Add(practitionerParser.Parse(toParse));
+                }
             }
             return practitioners;
         }

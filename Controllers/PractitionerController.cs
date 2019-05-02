@@ -18,5 +18,17 @@ namespace project.Controllers
         {
             return await practitionerService.GetAll();
         }
+
+        [HttpGet("[action]/{id}")]
+        public async Task<IPractitioner> Get(string id)
+        {
+            return await practitionerService.GetById(id);
+        }
+
+        [HttpPut("[action]/{id}/{paId}")]
+        public async Task<IPractitioner> MonitorPatient(string id, string paId = "1")
+        {
+            return await practitionerService.AddPatientMonitor(id, paId);
+        }
     }
 }

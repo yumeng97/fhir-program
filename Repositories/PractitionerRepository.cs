@@ -15,7 +15,8 @@ namespace project.Repositories
         public async Task<IPractitioner> GetByIdAsync(string id)
         {
             string argument = argumentStart + "_id=" + id;
-            return await practitionerQuery.GetPractitionerAsync(argument);
+            var practitioner = await practitionerQuery.GetPractitionersAsync(argument);
+            return practitioner.ElementAt(0);
         }
 
         public async Task<IEnumerable<IPractitioner>> GetAllAsync()

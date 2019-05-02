@@ -20,5 +20,12 @@ namespace project.Services
         {
             return await _practitionerRepository.GetAllAsync();
         }
+
+        public async Task<IPractitioner> AddPatientMonitor(string practitionerId, string patientId)
+        {
+            var practitioner = await _practitionerRepository.GetByIdAsync(practitionerId);
+            practitioner.AddToMonitored(patientId);
+            return practitioner;
+        }
     }
 }
