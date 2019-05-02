@@ -75,12 +75,29 @@ namespace project.Queries
 
     }
 
-    public class DiagnosticReportQuery
+    public class ObservationQuery
     {
         private readonly HttpClient client = new HttpClient();
-        private readonly string REPORT_PAGE = "http://hapi-fhir.erc.monash.edu:8080/baseDstu3/DiagnosticReport";
+        private readonly string OBSERVATION_PAGE = "http://hapi-fhir.erc.monash.edu:8080/baseDstu3/Observation";
 
-        //just going to try and see if i am able to get a response from server
+        public async Task<IEnumerable<Observation>> GetObservationsAsync(string patientId = "")
+        {
+            var responseString = await client.GetStringAsync(OBSERVATION_PAGE);
+            var jObject = JObject.Parse(responseString);
+            var observations = new List<Observation>();
+            var array = jObject["entry"].Children<JObject>();
+            foreach (var o in array)
+            {
+                ObservationParser observationParser = new ObservationParser();
+                var toParse = (JObject)o["resource"];
+                var checkProperty = toParse.ContainsKey("address");
+                if (checkProperty)
+                {
+                    observations.Add(observationParser.Parse(toParse));
+                }
+            }
+            return observations;
+        }
 
     }
 }

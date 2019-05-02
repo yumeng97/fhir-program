@@ -9,8 +9,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in reports">
-                    <td>{{ item.id }}</td>
+                <tr v-for="id in reports">
+                    <td>{{ item.patientId }}</td>
+                </tr>
+                <tr v-for="cholesterol in reports">
+                    <td>{{ item.cholesterol }}</td>
                 </tr>
             </tbody>
         </table>
