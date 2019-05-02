@@ -9,13 +9,11 @@ namespace project.Models
     {
         public string FamilyName { get; set; }
         public string GivenName { get; set; }
-        public string Prefix { get; set; }
 
-        public Name(string familyName, string givenName, string prefix)
+        public Name(string familyName, string givenName)
         {
             FamilyName = familyName;
             GivenName = givenName;
-            Prefix = prefix;
         }
     }
 

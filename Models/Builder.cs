@@ -15,12 +15,6 @@ namespace project.Models
             Patient.Id = id;
             return this;
         }
-
-        public PatientBuilder SetMaritalStatus(string maritalStatus)
-        {
-            Patient.MaritalStatus = maritalStatus;
-            return this;
-        }
         public PatientBuilder SetGender(string gender)
         {
             Patient.Gender = gender;
@@ -31,20 +25,15 @@ namespace project.Models
             Patient.LastUpdated = lastUpdated;
             return this;
         }
-        public PatientBuilder SetDeceasedDateTime(DateTime deceasedDateTime)
-        {
-            Patient.DeceasedDateTime = deceasedDateTime;
-            return this;
-        }
         public PatientBuilder SetBirthDate(DateTime birthDate)
         {
             Patient.BirthDate = birthDate;
             return this;
         }
 
-        public PatientBuilder SetName(string familyName, string givenName, string prefix)
+        public PatientBuilder SetName(string familyName, string givenName)
         {
-            Name name = new Name(familyName, givenName, prefix);
+            Name name = new Name(familyName, givenName);
             Patient.Name = name;
             return this;
         }
@@ -91,9 +80,9 @@ namespace project.Models
             Practitioner.LastUpdated = lastUpdated;
             return this;
         }
-        public PractitionerBuilder SetName(string familyName, string givenName, string prefix)
+        public PractitionerBuilder SetName(string familyName, string givenName)
         {
-            Name name = new Name(familyName, givenName, prefix);
+            Name name = new Name(familyName, givenName);
             Practitioner.Name = name;
             return this;
         }

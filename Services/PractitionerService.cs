@@ -9,21 +9,21 @@ namespace project.Services
 {
     public class PractitionerService
     {
-        private readonly PractitionerRepository _practitionerRepository = new PractitionerRepository();
+        private readonly PractitionerRepository practitionerRepository = new PractitionerRepository();
 
         public async Task<IPractitioner> GetById(string id)
         {
-            return await _practitionerRepository.GetByIdAsync(id);
+            return await practitionerRepository.GetByIdAsync(id);
         }
 
         public async Task<IEnumerable<IPractitioner>> GetAll()
         {
-            return await _practitionerRepository.GetAllAsync();
+            return await practitionerRepository.GetAllAsync();
         }
 
         public async Task<IPractitioner> AddPatientMonitor(string practitionerId, string patientId)
         {
-            var practitioner = await _practitionerRepository.GetByIdAsync(practitionerId);
+            var practitioner = await practitionerRepository.GetByIdAsync(practitionerId);
             practitioner.AddToMonitored(patientId);
             return practitioner;
         }

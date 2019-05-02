@@ -1,7 +1,7 @@
 ﻿<template>
     <div>
-
-        <table v-if="practitioners.length" class="table">
+        <h1>Practitioner List</h1>
+        <table v-if="practitioners.length" class="table" border=1 frame=hsides rules=rows>
             <thead>
                 <tr>
                     <th>Id</th>
@@ -15,7 +15,7 @@
                     <td>{{ item.active }}</td>
                     <td>{{ item.gender }}</td>
                     <td>
-                        <button @click="getThis(item.id)" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"></button>
+                        <button @click="getThis(item.id)"> Details </button>
                     </td>
                 </tr>
             </tbody>
