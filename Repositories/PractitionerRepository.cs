@@ -7,15 +7,23 @@ using project.Queries;
 
 namespace project.Repositories
 {
+    /// <summary>
+    /// Access practitioner data only
+    /// </summary>
     public class PractitionerRepository
     {
-        private readonly PractitionerQuery practitionerQuery = new PractitionerQuery();
-        private readonly string argumentStart = "?";
+        private readonly PractitionerQuery PractitionerQuery = new PractitionerQuery();
+        private readonly string ArgumentStart = "?";
 
+        /// <summary>
+        /// Get practitioner by id, if monitoring, add them to practitioner from "cache"
+        /// </summary>
+        /// <param name="id"> practitioner id </param>
+        /// <returns> A practitioner </returns>
         public async Task<IPractitioner> GetByIdAsync(string id)
         {
-            string argument = argumentStart + "_id=" + id;
-            var practitioners = await practitionerQuery.GetPractitionersAsync(argument);
+            string argument = ArgumentStart + "_id=" + id;
+            var practitioners = await PractitionerQuery.GetPractitionersAsync(argument);
             var practitioner = practitioners.ElementAt(0);
             if (PractitionerMonitorCollection.Exist(id))
             {
@@ -24,16 +32,30 @@ namespace project.Repositories
             return practitioner;
         }
 
+        /// <summary>
+        /// Get a collection of practitioner
+        /// </summary>
+        /// <returns> a collection of practitioner </returns>
         public async Task<IEnumerable<IPractitioner>> GetAllAsync()
         {
-            return await practitionerQuery.GetPractitionersAsync();
+            return await PractitionerQuery.GetPractitionersAsync();
         }
 
+        /// <summary>
+        /// Add monitor by id and patient id
+        /// </summary>
+        /// <param name="id"> practitioner id </param>
+        /// <param name="patientId"> patient id </param>
         public void AddMonitorByIdAndPatientId(string id, string patientId)
         {
             PractitionerMonitorCollection.Add(id, patientId);
         }
 
+        /// <summary>
+        /// Remove monitor by id and patient id
+        /// </summary>
+        /// <param name="id"> practitioner id </param>
+        /// <param name="patientId"> patient id </param>
         public void DeleteMonitorByIdAndPatientId(string id, string patientId)
         {
             PractitionerMonitorCollection.Delete(id, patientId);
