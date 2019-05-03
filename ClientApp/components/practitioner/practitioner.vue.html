@@ -2,11 +2,27 @@
     <div>
         <h1>Practitioner</h1>
         <h2>Practitioner info</h2>
-        <table v-for="(val, key) in practitioner" class="table" border=1 frame=hsides rules=rows>
-            <tr>
-                <th>{{key}}</th>
-                <td>{{val}}</td>
-            </tr>
+        <table class="table" border=1 frame=hsides rules=rows>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Active</th>
+                    <th>Gender</th>
+                    <th>Address</th>
+                    <th>Last Updated</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr >
+                    <td>{{ practitioner.id}}</td>
+                    <td>{{ practitioner.name}}</td>
+                    <td>{{ practitioner.isActive}}</td>
+                    <td>{{ practitioner.gender}}</td>
+                    <td>{{ practitioner.address}}</td>
+                    <td>{{ practitioner.lastUpdated}}</td>
+                </tr>
+            </tbody>
         </table>
 
         <h2>Monitored Patients</h2>
