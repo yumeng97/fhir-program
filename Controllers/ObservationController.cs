@@ -11,16 +11,16 @@ namespace project.Controllers
     [Route("api/[controller]")]
     public class ObservationController : Controller
     {
-        private readonly PractitionerService ObservationService = new PractitionerService();
+        private readonly ObservationService ObservationService = new ObservationService();
 
         [HttpGet("[action]")]
-        public async Task<IEnumerable<IPractitioner>> ShowAll()
+        public async Task<IEnumerable<Observation>> ShowAll()
         {
             return await ObservationService.GetAll();
         }
 
         [HttpGet("[action]/{id}")]
-        public async Task<IPractitioner> Get(string patientId)
+        public async Task<Observation> Get(string patientId)
         {
             return await ObservationService.GetById(patientId);
         }

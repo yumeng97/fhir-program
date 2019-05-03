@@ -4,14 +4,14 @@ import { Component } from 'vue-property-decorator';
 
 interface observation {
     patientId: string,
-    Cholesterol: string
+    cholesterol: string
 }
 
 @Component
 export default class Report extends Vue {
     observation: observation = <observation>{
         patientId: "",
-        Cholesterol: ""
+        cholesterol: ""
     }
 
     mounted() {
@@ -19,7 +19,7 @@ export default class Report extends Vue {
     }
 
     getObservation(id: string) {
-        let url = 'api/Observation/Get/' + id;
+        let url = 'api/Observation/ShowAll/' + id;
         axios({
             method: 'get',
             url: url
@@ -31,4 +31,7 @@ export default class Report extends Vue {
                 console.log(error);
             });
     }
+
+
+
 }

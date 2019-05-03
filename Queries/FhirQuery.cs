@@ -69,6 +69,7 @@ namespace project.Queries
             var observations = new List<Observation>();
             if (jObject.ContainsKey("entry"))
             {
+<<<<<<< HEAD
                 var array = jObject["entry"].Children<JObject>();
                 foreach (var o in array)
                 {
@@ -76,6 +77,11 @@ namespace project.Queries
                     var toParse = (JObject)o["resource"];
                     observations.Add(observationParser.Parse(toParse));
                 }
+=======
+                ObservationParser observationParser = new ObservationParser();
+                var toParse = (JObject)o["resource"];
+                observations.Add(observationParser.Parse(toParse));
+>>>>>>> 1322347f4b9b6045abf827f08b48a396d5c96a55
             }
             return observations;
         }
