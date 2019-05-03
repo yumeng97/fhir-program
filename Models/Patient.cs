@@ -15,5 +15,6 @@ namespace project.Models
         public Name Name { get; set; }
         public Address Address { get; set; }
         public Telecom Telecom { get; set; }
+        public List<Observation> Observations { get; set; }
     }
 }

@@ -7,8 +7,8 @@ namespace project.Models
 {
     public class Observation
     {
-        public string patientId { get; set; }
-
+        public string PatientId { get; set; }
         public string TotalCholesterol { get; set; } 
+        public DateTime EffectiveDateTime { get; set; }
     }
 }

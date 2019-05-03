@@ -9,5 +9,6 @@ namespace project.Models
     {
         DateTime BirthDate { get; set; }
         Telecom Telecom { get; set; }
+        List<Observation> Observations { get; set; }
     }
 }

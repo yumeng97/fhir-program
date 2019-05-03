@@ -106,12 +106,18 @@ namespace project.Models
 
         public ObservationBuilder SetId(string id)
         {
-            observation.patientId = id;
+            observation.PatientId = id;
             return this;
         }
         public ObservationBuilder SetTotalCholesterol(string cholesterol)
         {
             observation.TotalCholesterol = cholesterol;
+            return this;
+        }
+
+        public ObservationBuilder SetEffectiveDateTime(DateTime dateTime)
+        {
+            observation.EffectiveDateTime = dateTime;
             return this;
         }
         public Observation Build()

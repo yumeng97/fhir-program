@@ -11,6 +11,7 @@ namespace project.Services
     {
         private readonly PatientRepository patientRepository = new PatientRepository();
         private readonly PractitionerRepository practitionerRepository = new PractitionerRepository();
+        private readonly ObservationRepository observationRepository = new ObservationRepository();
 
         public async Task<IPatient> GetById(string id)
         {
@@ -31,6 +32,8 @@ namespace project.Services
                 foreach (string id in practitioner.MonitoredPatients)
                 {
                     var patient = await patientRepository.GetByIdAsync(id);
+                    patient.Observations = (List<Observation>) await GetObservations(id);
+                    patient.Observations.Sort((x, y) => DateTime.Compare(x.EffectiveDateTime, y.EffectiveDateTime));
                     patients.Add(patient);
                 }
                 return patients;
@@ -44,7 +47,11 @@ namespace project.Services
                 }
                 return patients.Where(patient => !practitioner.MonitoredPatients.Contains(patient.Id));
             }
-            
+        }
+
+        public async Task<IEnumerable<Observation>> GetObservations(string patientId)
+        {
+            return await observationRepository.GetByPatientAndTotalCholesterol(patientId);
         }
     }
 }

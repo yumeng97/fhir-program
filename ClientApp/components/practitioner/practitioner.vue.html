@@ -18,6 +18,7 @@
                     <th>Gender</th>
                     <th>Address</th>
                     <th>Last Updated</th>
+                    <th>Observations</th>
 
                 </tr>
             </thead>
@@ -28,6 +29,13 @@
                     <td>{{ item.gender }}</td>
                     <td>{{ item.address.line + " " + item.address.city + " " + item.address.state + " " + item.address.postalCode + " " + item.address.country }}</td>
                     <td>{{ item.lastUpdated }}</td>
+                    <td> <table class="table">
+                         <tr v-for="chol in item.observations">
+                             <td>ID: {{ chol.patientId }}</td>
+                             <td>Date: {{ chol.effectiveDateTime }}</td>
+                             <td>Cholesterol: {{ chol.totalCholesterol }}</td>
+                         </tr>
+                         </table></td>
                     <td>
                         <button @click="deleteFromMonitored(item.id)"> Delete </button>
                     </td>
