@@ -43,9 +43,9 @@ namespace project.Controllers
         /// <param name="id"> Practitioner ID </param>
         /// <param name="patientId"> Patient ID </param>
         [HttpPut("[action]/{id}/{patientId}")]
-        public async void AddPatientMonitor(string id, string patientId)
+        public void AddPatientMonitor(string id, string patientId)
         {
-            await _practitionerService.AddPatientMonitor(id, patientId);
+            _practitionerService.AddPatientMonitor(id, patientId);
         }
 
         /// <summary>
@@ -54,9 +54,9 @@ namespace project.Controllers
         /// <param name="id"> Practitioner ID </param>
         /// <param name="patientId"> Patient ID </param>
         [HttpPut("[action]/{id}/{patientId}")]
-        public async void DeletePatientMonitor(string id, string patientId)
+        public void DeletePatientMonitor(string id, string patientId)
         {
-            await _practitionerService.DeletePatientMonitor(id, patientId);
+            _practitionerService.DeletePatientMonitor(id, patientId);
         }
     }
 }

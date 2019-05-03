@@ -7,30 +7,50 @@ using project.Models;
 
 namespace project.Services
 {
+    /// <summary>
+    /// Practitioner Service, calling from repo to perform heavy/heavier logic
+    /// </summary>
     public class PractitionerService
     {
-        private readonly PractitionerRepository practitionerRepository = new PractitionerRepository();
+        private readonly PractitionerRepository _practitionerRepository = new PractitionerRepository();
 
+        /// <summary>
+        /// Get practitioner given id
+        /// </summary>
+        /// <param name="id"> Practitioner ID </param>
+        /// <returns> A practitioner</returns>
         public async Task<IPractitioner> GetById(string id)
         {
-            return await practitionerRepository.GetByIdAsync(id);
+            return await _practitionerRepository.GetByIdAsync(id);
         }
 
+        /// <summary>
+        /// Get a collection of Practitioner
+        /// </summary>
+        /// <returns> a collection of Practitioner </returns>
         public async Task<IEnumerable<IPractitioner>> GetAll()
         {
-            return await practitionerRepository.GetAllAsync();
+            return await _practitionerRepository.GetAllAsync();
         }
 
-        public async Task<IPractitioner> AddPatientMonitor(string id, string patientId)
+        /// <summary>
+        /// Add to monitor
+        /// </summary>
+        /// <param name="id"> Practitioner ID </param>
+        /// <param name="patientId"> Patient ID </param>
+        public void AddPatientMonitor(string id, string patientId)
         {
-            practitionerRepository.AddMonitorByIdAndPatientId(id, patientId);
-            return await practitionerRepository.GetByIdAsync(id);
+            _practitionerRepository.AddMonitorByIdAndPatientId(id, patientId);
         }
 
-        public async Task<IPractitioner> DeletePatientMonitor(string id, string patientId)
+        /// <summary>
+        /// Remove from monitor
+        /// </summary>
+        /// <param name="id"> Practitioner ID </param>
+        /// <param name="patientId"> Patient ID </param>
+        public void DeletePatientMonitor(string id, string patientId)
         {
-            practitionerRepository.DeleteMonitorByIdAndPatientId(id, patientId);
-            return await practitionerRepository.GetByIdAsync(id);
+            _practitionerRepository.DeleteMonitorByIdAndPatientId(id, patientId);
         }
     }
 }
