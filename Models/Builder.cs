@@ -98,4 +98,26 @@ namespace project.Models
             return Practitioner;
         }
     }
+
+    public class ObservationBuilder
+    {
+
+        private Observation observation = new Observation();
+
+        public ObservationBuilder SetId(string id)
+        {
+            observation.patientId = id;
+            return this;
+        }
+        public ObservationBuilder SetTotalCholesterol(string cholesterol)
+        {
+            observation.TotalCholesterol = cholesterol;
+            return this;
+        }
+        public Observation Build()
+        {
+            return observation;
+        }
+    }
+
 }
