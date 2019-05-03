@@ -62,9 +62,9 @@ namespace project.Queries
         private readonly HttpClient client = new HttpClient();
         private readonly string OBSERVATION_PAGE = "http://hapi-fhir.erc.monash.edu:8080/baseDstu3/Observation";
 
-        public async Task<IEnumerable<Observation>> GetObservationsAsync(string patientId = "")
+        public async Task<IEnumerable<Observation>> GetObservationsAsync(string para = "")
         {
-            var responseString = await client.GetStringAsync(OBSERVATION_PAGE);
+            var responseString = await client.GetStringAsync(OBSERVATION_PAGE + para);
             var jObject = JObject.Parse(responseString);
             var observations = new List<Observation>();
             var array = jObject["entry"].Children<JObject>();
@@ -72,11 +72,7 @@ namespace project.Queries
             {
                 ObservationParser observationParser = new ObservationParser();
                 var toParse = (JObject)o["resource"];
-                var checkProperty = toParse.ContainsKey("address");
-                if (checkProperty)
-                {
-                    observations.Add(observationParser.Parse(toParse));
-                }
+                observations.Add(observationParser.Parse(toParse));
             }
             return observations;
         }
