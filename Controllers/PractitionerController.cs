@@ -25,10 +25,16 @@ namespace project.Controllers
             return await practitionerService.GetById(id);
         }
 
-        [HttpPut("[action]/{id}/{paId}")]
-        public async Task<IPractitioner> MonitorPatient(string id, string paId = "1")
+        [HttpPut("[action]/{id}/{patientId}")]
+        public async Task<IPractitioner> AddPatientMonitor(string id, string patientId)
         {
-            return await practitionerService.AddPatientMonitor(id, paId);
+            return await practitionerService.AddPatientMonitor(id, patientId);
+        }
+
+        [HttpPut("[action]/{id}/{patientId}")]
+        public async Task<IPractitioner> DeletePatientMonitor(string id, string patientId)
+        {
+            return await practitionerService.DeletePatientMonitor(id, patientId);
         }
     }
 }

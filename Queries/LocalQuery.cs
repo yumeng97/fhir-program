@@ -6,49 +6,46 @@ using project.Models;
 
 namespace project.Queries
 {
-    public static class PractitionerCollection
+    public static class PractitionerMonitorCollection
     {
-        private static List<IPractitioner> practitioners = new List<IPractitioner>();
-        private static Dictionary<IPractitioner, DateTime> timeStamp = new Dictionary<IPractitioner, DateTime>();
+        private static Dictionary<string, List<string>> practitionerMonitor = new Dictionary<string, List<string>>();
 
-        public static bool ValidExist(IPractitioner p)
+        public static bool Exist(string practitionerId)
         {
-            bool exist = false;
-            foreach (IPractitioner _p in practitioners)
+            return practitionerMonitor.ContainsKey(practitionerId);
+        }
+
+        public static List<string> Get(string practitionerId)
+        {
+            return practitionerMonitor[practitionerId];
+        }
+
+        public static void Add(string practitionerId, string patientId)
+        {
+            if (Exist(practitionerId))
             {
-                if (_p.Id == p.Id)
+                if (!Get(practitionerId).Contains(patientId))
                 {
-                    if (DateTime.Now.Subtract(timeStamp[_p]).TotalMinutes > 60)
-                    {
-                        exist = true;
-                    }
+                    Get(practitionerId).Add(patientId);
+                }
+            } else
+            {
+                practitionerMonitor[practitionerId] = new List<string>
+                {
+                    patientId
+                };
+            }
+        }
+
+        public static void Delete(string practitionerId, string patientId)
+        {
+            if (Exist(practitionerId))
+            {
+                if (Get(practitionerId).Contains(patientId))
+                {
+                    Get(practitionerId).Remove(patientId);
                 }
             }
-            return exist;
-        }
-
-        public static IPractitioner Get(IPractitioner p)
-        {
-            return practitioners.Where(_p => _p.Id == p.Id).First();
-        }
-
-        public static void Add(IPractitioner p)
-        {
-            practitioners.Add(p);
-            timeStamp.Add(p, DateTime.Now);
-        }
-
-        public static void Delete(IPractitioner p)
-        {
-            var _p = Get(p);
-            practitioners.Remove(_p);
-            timeStamp.Remove(_p);
-        }
-
-        public static void Update(IPractitioner p)
-        {
-            Delete(p);
-            practitioners.Add(p);
         }
     }
 }

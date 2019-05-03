@@ -21,11 +21,16 @@ namespace project.Services
             return await practitionerRepository.GetAllAsync();
         }
 
-        public async Task<IPractitioner> AddPatientMonitor(string practitionerId, string patientId)
+        public async Task<IPractitioner> AddPatientMonitor(string id, string patientId)
         {
-            var practitioner = await practitionerRepository.GetByIdAsync(practitionerId);
-            practitioner.AddToMonitored(patientId);
-            return practitioner;
+            practitionerRepository.AddMonitorByIdAndPatientId(id, patientId);
+            return await practitionerRepository.GetByIdAsync(id);
+        }
+
+        public async Task<IPractitioner> DeletePatientMonitor(string id, string patientId)
+        {
+            practitionerRepository.DeleteMonitorByIdAndPatientId(id, patientId);
+            return await practitionerRepository.GetByIdAsync(id);
         }
     }
 }

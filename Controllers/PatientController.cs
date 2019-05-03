@@ -19,6 +19,18 @@ namespace project.Controllers
             return await patientService.GetAll();
         }
 
+        [HttpGet("[action]/{practitionerId}")]
+        public async Task<IEnumerable<IPatient>> ShowNotMonitored(string practitionerId)
+        {
+            return await patientService.GetByPractitionerId(practitionerId);
+        }
+
+        [HttpGet("[action]/{practitionerId}")]
+        public async Task<IEnumerable<IPatient>> ShowMonitored(string practitionerId)
+        {
+            return await patientService.GetByPractitionerId(practitionerId, true);
+        }
+
         [HttpGet("[action]/{id}")]
         public async Task<IPatient> Get(string id)
         {
