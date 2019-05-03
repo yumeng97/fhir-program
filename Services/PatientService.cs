@@ -36,42 +36,54 @@ namespace project.Services
         }
 
         /// <summary>
-        /// Get a collection of patient given practitioner ID,
-        /// if monitored false, return a collection of patient that is not being monitored
-        /// if true, return a collection of patient that is being monitored
+        /// Get a collection of patient given practitioner ID that is being monitored
         /// </summary>
         /// <param name="practitionerId"> Practitioner ID</param>
-        /// <param name="monitored"> bool </param>
         /// <returns> A collection of Patient </returns>
-        public async Task<IEnumerable<IPatient>> GetByPractitionerId(string practitionerId, bool monitored = false)
+        public async Task<IEnumerable<IPatient>> GetMonitoredByPractitionerId(string practitionerId)
         {
             var practitioner = await PractitionerRepository.GetByIdAsync(practitionerId);
-            if (monitored) // Get observations of patients that is being monitored
-            {
-                var patients = new List<IPatient>();
-                foreach (string id in practitioner.MonitoredPatients)
-                {
-                    var patient = await PatientRepository.GetByIdAsync(id);
-                    patient.Observations = (List<Observation>) await GetObservationById(id);
-                    patient.Observations.Sort((x, y) => DateTime.Compare(x.EffectiveDateTime, y.EffectiveDateTime));
-                    patients.Add(patient);
-                }
-                return patients;
-            } else
-            {
-                var patients = await PatientRepository.GetAllAsync();
-                return patients.Where(patient => !practitioner.MonitoredPatients.Contains(patient.Id));
-            }
+            return practitioner.MonitoredPatients.Select(id => PatientRepository.GetByIdAsync(id))
+                                                 .Select(p => p.Result);
         }
 
         /// <summary>
-        /// Get a collection of observation given patient id
+        /// Get a collection of patient given practitioner ID that is not being monitored
         /// </summary>
-        /// <param name="id"> Patient ID </param>
-        /// <returns> A collection of Observation </returns>
-        public async Task<IEnumerable<Observation>> GetObservationById(string id)
+        /// <param name="practitionerId"> Practitioner ID</param>
+        /// <returns> A collection of Patient </returns>
+        public async Task<IEnumerable<IPatient>> GetNotMonitoredByPractitionerId(string practitionerId)
+        {
+            var practitioner = await PractitionerRepository.GetByIdAsync(practitionerId);
+            var patients = await PatientRepository.GetAllAsync();
+            return patients.Where(patient => !practitioner.MonitoredPatients.Contains(patient.Id));
+        }
+
+            /// <summary>
+            /// Get a collection of observation given patient id
+            /// </summary>
+            /// <param name="id"> Patient ID </param>
+            /// <returns> A collection of Observation </returns>
+            public async Task<IEnumerable<Observation>> GetObservationById(string id)
         {
             return await ObservationRepository.GetByPatientAndTotalCholesterol(id);
+        }
+
+        /// <summary>
+        /// Get a collection of patient with their respectives observations given a collection of patient
+        /// </summary>
+        /// <param name="patients"> a collection of patients</param>
+        /// <returns> a collection of patients </returns>
+        public async Task<IEnumerable<IPatient>> GetPatientsWithObservations(IEnumerable<IPatient> patients)
+        {
+            List<IPatient> patientsWithObservations = new List<IPatient>();
+            foreach (IPatient patient in patients)
+            {
+                patient.Observations = (List<Observation>)await GetObservationById(patient.Id);
+                patient.Observations.Sort((x, y) => DateTime.Compare(x.EffectiveDateTime, y.EffectiveDateTime));
+                patientsWithObservations.Add(patient);
+            }
+            return patientsWithObservations;
         }
     }
 }

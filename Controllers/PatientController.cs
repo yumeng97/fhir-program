@@ -34,7 +34,8 @@ namespace project.Controllers
         [HttpGet("[action]/{practitionerId}")]
         public async Task<IEnumerable<IPatient>> ShowNotMonitored(string practitionerId)
         {
-            return await PatientService.GetByPractitionerId(practitionerId);
+            var patients = await PatientService.GetNotMonitoredByPractitionerId(practitionerId);
+            return await PatientService.GetPatientsWithObservations(patients);
         }
 
         /// <summary>
@@ -45,7 +46,8 @@ namespace project.Controllers
         [HttpGet("[action]/{practitionerId}")]
         public async Task<IEnumerable<IPatient>> ShowMonitored(string practitionerId)
         {
-            return await PatientService.GetByPractitionerId(practitionerId, true);
+            var patients = await PatientService.GetMonitoredByPractitionerId(practitionerId);
+            return await PatientService.GetPatientsWithObservations(patients);
         }
     }
 }
