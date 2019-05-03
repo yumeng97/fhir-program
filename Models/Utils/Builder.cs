@@ -6,123 +6,131 @@ using System.Threading.Tasks;
 namespace project.Models
 
 {
+    /// <summary>
+    /// Builder for Patient
+    /// </summary>
     public class PatientBuilder
     {
-        private IPatient Patient = new Patient();
+        private IPatient _patient = new Patient();
 
         public PatientBuilder SetId(string id)
         {
-            Patient.Id = id;
+            _patient.Id = id;
             return this;
         }
         public PatientBuilder SetGender(string gender)
         {
-            Patient.Gender = gender;
+            _patient.Gender = gender;
             return this;
         }
         public PatientBuilder SetLastUpdated(DateTime lastUpdated)
         {
-            Patient.LastUpdated = lastUpdated;
+            _patient.LastUpdated = lastUpdated;
             return this;
         }
         public PatientBuilder SetBirthDate(DateTime birthDate)
         {
-            Patient.BirthDate = birthDate;
+            _patient.BirthDate = birthDate;
             return this;
         }
 
         public PatientBuilder SetName(string familyName, string givenName)
         {
             Name name = new Name(familyName, givenName);
-            Patient.Name = name;
+            _patient.Name = name;
             return this;
         }
 
         public PatientBuilder SetAddress(string line, string city, string state, string postalCode, string country)
         {
             Address address = new Address(line, city, state, postalCode, country);
-            Patient.Address = address;
+            _patient.Address = address;
             return this;
         }
         public PatientBuilder SetTelecom(string system, string value, string use)
         {
             Telecom telecom = new Telecom(system, value, use);
-            Patient.Telecom = telecom;
+            _patient.Telecom = telecom;
             return this;
         }
 
         public IPatient Build()
         {
-            return Patient;
+            return _patient;
         }
     }
 
+    /// <summary>
+    /// Builder for Practitioner
+    /// </summary>
     public class PractitionerBuilder
     {
-        private IPractitioner Practitioner = new Practitioner();
+        private IPractitioner _practitioner = new Practitioner();
         public PractitionerBuilder SetId(string id)
         {
-            Practitioner.Id = id;
+            _practitioner.Id = id;
             return this;
         }
         public PractitionerBuilder SetGender(string gender)
         {
-            Practitioner.Gender = gender;
+            _practitioner.Gender = gender;
             return this;
         }
         public PractitionerBuilder SetActive(bool active)
         {
-            Practitioner.Active = active;
+            _practitioner.Active = active;
             return this;
         }
         public PractitionerBuilder SetLastUpdated(DateTime lastUpdated)
         {
-            Practitioner.LastUpdated = lastUpdated;
+            _practitioner.LastUpdated = lastUpdated;
             return this;
         }
         public PractitionerBuilder SetName(string familyName, string givenName)
         {
             Name name = new Name(familyName, givenName);
-            Practitioner.Name = name;
+            _practitioner.Name = name;
             return this;
         }
 
         public PractitionerBuilder SetAddress(string line, string city, string state, string postalCode, string country)
         {
             Address address = new Address(line, city, state, postalCode, country);
-            Practitioner.Address = address;
+            _practitioner.Address = address;
             return this;
         }
         public IPractitioner Build()
         {
-            return Practitioner;
+            return _practitioner;
         }
     }
 
+    /// <summary>
+    /// Builder for observation
+    /// </summary>
     public class ObservationBuilder
     {
-
-        private Observation observation = new Observation();
+        private Observation _observation = new Observation();
 
         public ObservationBuilder SetId(string id)
         {
-            observation.PatientId = id;
+            _observation.PatientId = id;
             return this;
         }
         public ObservationBuilder SetTotalCholesterol(string cholesterol)
         {
-            observation.TotalCholesterol = cholesterol;
+            _observation.TotalCholesterol = cholesterol;
             return this;
         }
 
         public ObservationBuilder SetEffectiveDateTime(DateTime dateTime)
         {
-            observation.EffectiveDateTime = dateTime;
+            _observation.EffectiveDateTime = dateTime;
             return this;
         }
         public Observation Build()
         {
-            return observation;
+            return _observation;
         }
     }
 
