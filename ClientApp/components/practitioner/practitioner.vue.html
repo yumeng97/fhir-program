@@ -68,6 +68,7 @@
                     <th>Gender</th>
                     <th>Address</th>
                     <th>Last Updated</th>
+                    <th>Total Observation Count</th>
 
                 </tr>
             </thead>
@@ -78,6 +79,7 @@
                     <td>{{ item.gender }}</td>
                     <td>{{ item.address.line + " " + item.address.city + " " + item.address.state + " " + item.address.postalCode + " " + item.address.country }}</td>
                     <td>{{ item.lastUpdated }}</td>
+                    <td>{{ item.observations.length }}</td>
                     <td>
                         <button @click="addToMonitored(item.id)"> Add </button>
                     </td>

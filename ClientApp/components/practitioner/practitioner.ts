@@ -37,6 +37,7 @@ export default class PractitionerListComponent extends Vue {
         this.getPractitioner(this.$route.params.id);
         this.getPatients(this.$route.params.id);
         this.getMonitored(this.$route.params.id);
+        this.autoRefresh(this.$route.params.id)
     }
 
     getPractitioner(id: string) {
@@ -58,7 +59,7 @@ export default class PractitionerListComponent extends Vue {
             .catch((error: any) => {
                 console.log(error);
             });
-    }
+    } 
 
     getPatients(id: string) {
         let url = 'api/Patient/ShowNotMonitored/' + id;
@@ -90,6 +91,13 @@ export default class PractitionerListComponent extends Vue {
             });
     }
 
+    autoRefresh(id: string) {
+        setInterval(() => {
+            this.getMonitored(id);
+        }, 3600000)
+    }
+ 
+
     addToMonitored(patientId: string) {
         let url = 'api/Practitioner/AddPatientMonitor/' + this.$route.params.id + '/' + patientId;
         axios({
@@ -97,6 +105,10 @@ export default class PractitionerListComponent extends Vue {
             url: url
         }).then((response: any) => {
             console.log(response.data);
+            let patient = this.searchParent(patientId, this.patients)
+            this.monitored.push(patient);
+            this.patients = this.patients.filter(patient => patient.id != patientId);
+
         })
             .catch((error: any) => {
                 console.log(error);
@@ -110,9 +122,28 @@ export default class PractitionerListComponent extends Vue {
             url: url
         }).then((response: any) => {
             console.log(response.data);
+            let patient = this.searchParent(patientId, this.monitored)
+            this.patients.push(patient);
+            this.monitored = this.monitored.filter(patient => patient.id != patientId);
         })
             .catch((error: any) => {
                 console.log(error);
             });
+    }
+
+    searchParent(id: string, patients: Patient[]): Patient {
+        let p = <Patient> {
+            id: "",
+            name: "",
+            gender: "",
+            address: "",
+            lastUpdated: ""
+        };
+        for (let patient of patients) {
+            if (patient.id == id) {
+                return patient;
+            }
+        }
+        return p;
     }
 }
