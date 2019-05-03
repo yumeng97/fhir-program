@@ -14,7 +14,7 @@ namespace project.Controllers
     [Route("api/[controller]")]
     public class PractitionerController : Controller
     {
-        private readonly PractitionerService _practitionerService = new PractitionerService();
+        private readonly PractitionerService PractitionerService = new PractitionerService();
 
         /// <summary>
         /// To display a collection of IPractitioner
@@ -23,7 +23,7 @@ namespace project.Controllers
         [HttpGet("[action]")]
         public async Task<IEnumerable<IPractitioner>> ShowAll()
         {
-            return await _practitionerService.GetAll();
+            return await PractitionerService.GetAll();
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace project.Controllers
         [HttpGet("[action]/{id}")]
         public async Task<IPractitioner> Get(string id)
         {
-            return await _practitionerService.GetById(id);
+            return await PractitionerService.GetById(id);
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace project.Controllers
         [HttpPut("[action]/{id}/{patientId}")]
         public void AddPatientMonitor(string id, string patientId)
         {
-            _practitionerService.AddPatientMonitor(id, patientId);
+            PractitionerService.AddPatientMonitor(id, patientId);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace project.Controllers
         [HttpPut("[action]/{id}/{patientId}")]
         public void DeletePatientMonitor(string id, string patientId)
         {
-            _practitionerService.DeletePatientMonitor(id, patientId);
+            PractitionerService.DeletePatientMonitor(id, patientId);
         }
     }
 }

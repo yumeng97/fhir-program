@@ -12,9 +12,9 @@ namespace project.Services
     /// </summary>
     public class PatientService
     {
-        private readonly PatientRepository _patientRepository = new PatientRepository();
-        private readonly PractitionerRepository _practitionerRepository = new PractitionerRepository();
-        private readonly ObservationRepository _observationRepository = new ObservationRepository();
+        private readonly PatientRepository PatientRepository = new PatientRepository();
+        private readonly PractitionerRepository PractitionerRepository = new PractitionerRepository();
+        private readonly ObservationRepository ObservationRepository = new ObservationRepository();
 
         /// <summary>
         /// Get patient given id
@@ -23,7 +23,7 @@ namespace project.Services
         /// <returns> A patient </returns>
         public async Task<IPatient> GetById(string id)
         {
-            return await _patientRepository.GetByIdAsync(id);
+            return await PatientRepository.GetByIdAsync(id);
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace project.Services
         /// <returns> A collection of patient</returns>
         public async Task<IEnumerable<IPatient>> GetAll()
         {
-            return await _patientRepository.GetAllAsync();
+            return await PatientRepository.GetAllAsync();
         }
 
         /// <summary>
@@ -45,13 +45,13 @@ namespace project.Services
         /// <returns> A collection of Patient </returns>
         public async Task<IEnumerable<IPatient>> GetByPractitionerId(string practitionerId, bool monitored = false)
         {
-            var practitioner = await _practitionerRepository.GetByIdAsync(practitionerId);
+            var practitioner = await PractitionerRepository.GetByIdAsync(practitionerId);
             if (monitored) // Get observations of patients that is being monitored
             {
                 var patients = new List<IPatient>();
                 foreach (string id in practitioner.MonitoredPatients)
                 {
-                    var patient = await _patientRepository.GetByIdAsync(id);
+                    var patient = await PatientRepository.GetByIdAsync(id);
                     patient.Observations = (List<Observation>) await GetObservationById(id);
                     patient.Observations.Sort((x, y) => DateTime.Compare(x.EffectiveDateTime, y.EffectiveDateTime));
                     patients.Add(patient);
@@ -59,7 +59,7 @@ namespace project.Services
                 return patients;
             } else
             {
-                var patients = await _patientRepository.GetAllAsync();
+                var patients = await PatientRepository.GetAllAsync();
                 return patients.Where(patient => !practitioner.MonitoredPatients.Contains(patient.Id));
             }
         }
@@ -71,7 +71,7 @@ namespace project.Services
         /// <returns> A collection of Observation </returns>
         public async Task<IEnumerable<Observation>> GetObservationById(string id)
         {
-            return await _observationRepository.GetByPatientAndTotalCholesterol(id);
+            return await ObservationRepository.GetByPatientAndTotalCholesterol(id);
         }
     }
 }

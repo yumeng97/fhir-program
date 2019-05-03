@@ -12,7 +12,7 @@ namespace project.Services
     /// </summary>
     public class PractitionerService
     {
-        private readonly PractitionerRepository _practitionerRepository = new PractitionerRepository();
+        private readonly PractitionerRepository PractitionerRepository = new PractitionerRepository();
 
         /// <summary>
         /// Get practitioner given id
@@ -21,7 +21,7 @@ namespace project.Services
         /// <returns> A practitioner</returns>
         public async Task<IPractitioner> GetById(string id)
         {
-            return await _practitionerRepository.GetByIdAsync(id);
+            return await PractitionerRepository.GetByIdAsync(id);
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace project.Services
         /// <returns> a collection of Practitioner </returns>
         public async Task<IEnumerable<IPractitioner>> GetAll()
         {
-            return await _practitionerRepository.GetAllAsync();
+            return await PractitionerRepository.GetAllAsync();
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace project.Services
         /// <param name="patientId"> Patient ID </param>
         public void AddPatientMonitor(string id, string patientId)
         {
-            _practitionerRepository.AddMonitorByIdAndPatientId(id, patientId);
+            PractitionerRepository.AddMonitorByIdAndPatientId(id, patientId);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace project.Services
         /// <param name="patientId"> Patient ID </param>
         public void DeletePatientMonitor(string id, string patientId)
         {
-            _practitionerRepository.DeleteMonitorByIdAndPatientId(id, patientId);
+            PractitionerRepository.DeleteMonitorByIdAndPatientId(id, patientId);
         }
     }
 }
