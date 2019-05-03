@@ -33,7 +33,12 @@ namespace project.Queries
             {
                 PatientParser patientParser = new PatientParser();
                 var toParse = (JObject)o["resource"];
-                patients.Add(patientParser.Parse(toParse));
+                // Certain practitioner does not have address so only include those have address
+                var checkProperty = toParse.ContainsKey("address");
+                if (checkProperty)
+                {
+                    patients.Add(patientParser.Parse(toParse));
+                }
             }
             return patients;
         }
