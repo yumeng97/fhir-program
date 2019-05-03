@@ -14,38 +14,38 @@ namespace project.Controllers
     [Route("api/[controller]")]
     public class PatientController : Controller
     {
-        private readonly PatientService patientService = new PatientService();
+        private readonly PatientService _patientService = new PatientService();
 
         /// <summary>
-        /// Display a collection of IPatient
+        /// To display a collection of IPatient
         /// </summary>
         /// <returns> A collection of IPatient </returns>
         [HttpGet("[action]")]
         public async Task<IEnumerable<IPatient>> ShowAll()
         {
-            return await patientService.GetAll();
+            return await _patientService.GetAll();
         }
 
         /// <summary>
-        /// Display a collection of IPatient that is not being monitored
+        /// To display a collection of IPatient that is not being monitored
         /// </summary>
         /// <param name="practitionerId"> Practitioner ID </param>
         /// <returns> A collection of IPatient </returns>
         [HttpGet("[action]/{practitionerId}")]
         public async Task<IEnumerable<IPatient>> ShowNotMonitored(string practitionerId)
         {
-            return await patientService.GetByPractitionerId(practitionerId);
+            return await _patientService.GetByPractitionerId(practitionerId);
         }
 
         /// <summary>
-        /// Display a collection of IPatient that is being monitored
+        /// To display a collection of IPatient that is being monitored
         /// </summary>
         /// <param name="practitionerId"> Practitioner ID </param>
         /// <returns> A collection of IPatient </returns>
         [HttpGet("[action]/{practitionerId}")]
         public async Task<IEnumerable<IPatient>> ShowMonitored(string practitionerId)
         {
-            return await patientService.GetByPractitionerId(practitionerId, true);
+            return await _patientService.GetByPractitionerId(practitionerId, true);
         }
     }
 }
