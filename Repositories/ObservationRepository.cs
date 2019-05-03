@@ -14,8 +14,8 @@ namespace project.Repositories
     {
         private readonly ObservationQuery ObservationQuery = new ObservationQuery();
         private readonly string ArgumentStart = "?";
-        private readonly string TotalCholesterol = "code=http://loinc.org|2093-3";
-        private readonly string Patient = "patient=Patient/";
+        private readonly string TotalCholesterolArg = "code=http://loinc.org|2093-3";
+        private readonly string PatientArg = "patient=Patient/";
 
         /// <summary>
         /// Get observations with total cholesterol only by Patient ID
@@ -24,7 +24,7 @@ namespace project.Repositories
         /// <returns> A collection of observation </returns>
         public async Task<IEnumerable<Observation>> GetByPatientAndTotalCholesterol(string patientId)
         {
-            string argument = ArgumentStart + TotalCholesterol + "&" + Patient + patientId;
+            string argument = ArgumentStart + TotalCholesterolArg + "&" + PatientArg + patientId;
             var observations = await ObservationQuery.GetObservationsAsync(argument);
             return observations;
         }

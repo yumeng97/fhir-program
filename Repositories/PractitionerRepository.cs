@@ -16,7 +16,7 @@ namespace project.Repositories
         private readonly string ArgumentStart = "?";
 
         /// <summary>
-        /// Get practitioner by id, if monitoring, add them to practitioner from "cache"
+        /// Get practitioner by id, if monitoring, add them to an instance var of practitioner from "cache"
         /// </summary>
         /// <param name="id"> practitioner id </param>
         /// <returns> A practitioner </returns>
@@ -41,24 +41,15 @@ namespace project.Repositories
             return await PractitionerQuery.GetPractitionersAsync();
         }
 
-        /// <summary>
-        /// Add monitor by id and patient id
-        /// </summary>
-        /// <param name="id"> practitioner id </param>
-        /// <param name="patientId"> patient id </param>
-        public void AddMonitorByIdAndPatientId(string id, string patientId)
-        {
-            PractitionerMonitorCollection.Add(id, patientId);
-        }
 
         /// <summary>
-        /// Remove monitor by id and patient id
+        /// Update the cache monitor patient
         /// </summary>
         /// <param name="id"> practitioner id </param>
-        /// <param name="patientId"> patient id </param>
-        public void DeleteMonitorByIdAndPatientId(string id, string patientId)
+        /// <param name="patientIds"> a list of patient ids </param>
+        public void UpdateMonitorByIdAndPatientIdList(string id, List<string> patientIds)
         {
-            PractitionerMonitorCollection.Delete(id, patientId);
+            PractitionerMonitorCollection.Update(id, patientIds);
         }
     }
 }

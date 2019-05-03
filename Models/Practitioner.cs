@@ -18,27 +18,18 @@ namespace project.Models
         public DateTime LastUpdated { get; set; }
         public Name Name { get; set; }
         public Address Address { get; set; }
-
         public void AddToMonitored(string id)
         {
-            if (MonitoredPatients.Contains(id))
-            {
-                throw new Exception();
-            }
-            else
+            if (!MonitoredPatients.Contains(id))
             {
                 MonitoredPatients.Add(id);
             }
         }
         public void RemoveFromMonitored(string id)
         {
-            if (!(MonitoredPatients.Contains(id)))
+            if ((MonitoredPatients.Contains(id)))
             {
                 MonitoredPatients.Remove(id);
-            }
-            else
-            {
-                throw new Exception();
             }
         }
     }

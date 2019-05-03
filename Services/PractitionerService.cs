@@ -38,9 +38,11 @@ namespace project.Services
         /// </summary>
         /// <param name="id"> Practitioner ID </param>
         /// <param name="patientId"> Patient ID </param>
-        public void AddPatientMonitor(string id, string patientId)
+        public async void AddPatientMonitor(string id, string patientId)
         {
-            PractitionerRepository.AddMonitorByIdAndPatientId(id, patientId);
+            var practitioner = await PractitionerRepository.GetByIdAsync(id);
+            practitioner.AddToMonitored(patientId);
+            PractitionerRepository.UpdateMonitorByIdAndPatientIdList(id, practitioner.MonitoredPatients);
         }
 
         /// <summary>
@@ -48,9 +50,11 @@ namespace project.Services
         /// </summary>
         /// <param name="id"> Practitioner ID </param>
         /// <param name="patientId"> Patient ID </param>
-        public void DeletePatientMonitor(string id, string patientId)
+        public async void DeletePatientMonitor(string id, string patientId)
         {
-            PractitionerRepository.DeleteMonitorByIdAndPatientId(id, patientId);
+            var practitioner = await PractitionerRepository.GetByIdAsync(id);
+            practitioner.RemoveFromMonitored(patientId);
+            PractitionerRepository.UpdateMonitorByIdAndPatientIdList(id, practitioner.MonitoredPatients);
         }
     }
 }

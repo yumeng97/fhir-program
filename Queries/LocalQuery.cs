@@ -20,32 +20,9 @@ namespace project.Queries
             return practitionerMonitor[practitionerId];
         }
 
-        public static void Add(string practitionerId, string patientId)
+        public static void Update(string practitionerId, List<string> patientId)
         {
-            if (Exist(practitionerId))
-            {
-                if (!Get(practitionerId).Contains(patientId))
-                {
-                    Get(practitionerId).Add(patientId);
-                }
-            } else
-            {
-                practitionerMonitor[practitionerId] = new List<string>
-                {
-                    patientId
-                };
-            }
-        }
-
-        public static void Delete(string practitionerId, string patientId)
-        {
-            if (Exist(practitionerId))
-            {
-                if (Get(practitionerId).Contains(patientId))
-                {
-                    Get(practitionerId).Remove(patientId);
-                }
-            }
+            practitionerMonitor[practitionerId] = patientId;
         }
     }
 }
