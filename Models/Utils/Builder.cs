@@ -105,33 +105,4 @@ namespace project.Models
         }
     }
 
-    /// <summary>
-    /// Builder for observation
-    /// </summary>
-    public class ObservationBuilder
-    {
-        private Observation _observation = new Observation();
-
-        public ObservationBuilder SetId(string id)
-        {
-            _observation.PatientId = id;
-            return this;
-        }
-        public ObservationBuilder SetTotalCholesterol(string cholesterol)
-        {
-            _observation.TotalCholesterol = cholesterol;
-            return this;
-        }
-
-        public ObservationBuilder SetEffectiveDateTime(DateTime dateTime)
-        {
-            _observation.EffectiveDateTime = dateTime;
-            return this;
-        }
-        public Observation Build()
-        {
-            return _observation;
-        }
-    }
-
 }
