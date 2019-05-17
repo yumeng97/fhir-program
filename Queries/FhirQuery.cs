@@ -95,7 +95,7 @@ namespace project.Queries
         /// </summary>
         /// <param name="para"> a string of content to be filtered </param>
         /// <returns> a collection of observation </returns>
-        public async Task<IEnumerable<Observation>> GetObservationsAsync(string para = "")
+        public async Task<IEnumerable<Observation>> GetObservationsAsync(Observation.ObservationType type, string para = "")
         {
             var responseString = await client.GetStringAsync(ObservationPage + para);
             var jObject = JObject.Parse(responseString);
@@ -108,7 +108,21 @@ namespace project.Queries
                 {
                     ObservationParser observationParser = new ObservationParser();
                     var toParse = (JObject)o["resource"];
-                    observations.Add(observationParser.Parse(toParse));
+                    switch (type)
+                    {
+                        case Observation.ObservationType.Cholesterol:
+                            observations.Add(observationParser.ParseCholesterol(toParse));
+                            break;
+                        case Observation.ObservationType.Tobacco:
+                            observations.Add(observationParser.ParseTobacco(toParse));
+                            break;
+                        case Observation.ObservationType.BloodPressure:
+                            foreach (var b in observationParser.ParseBloodPressure(toParse))
+                            {
+                                observations.Add(b);
+                            }
+                            break;
+                    }
                 }
             }
             return observations;

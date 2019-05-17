@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using project.Models.Utils;
 
 namespace project.Models
 {
@@ -68,20 +69,32 @@ namespace project.Models
     /// </summary>
     public class ObservationParser
     {
-        private ObservationBuilder _observationBuilder = new ObservationBuilder();
+        private ObservationFactory _observationFactory = new ObservationFactory();
 
-        /// <summary>
-        /// Get values through keys in json and build it
-        /// </summary>
-        /// <param name="jObject"></param>
-        /// <returns></returns>
-        public Observation Parse(JObject jObject)
+        public Observation ParseCholesterol(JObject jObject)
         {
-            _observationBuilder.SetId(jObject["id"].ToString())
-                .SetTotalCholesterol(jObject["valueQuantity"]["value"].ToString())
-                .SetEffectiveDateTime(jObject["effectiveDateTime"].ToObject<DateTime>());
+            string id = jObject["id"].ToString();
+            string value = jObject["valueQuantity"]["value"].ToString();
+            DateTime dateTime = jObject["effectiveDateTime"].ToObject<DateTime>();
+            return _observationFactory.CreateCholesterol(id, value, dateTime);
+        }
 
-            return _observationBuilder.Build();
+        public Observation ParseTobacco(JObject jObject)
+        {
+            string id = jObject["id"].ToString();
+            string value = jObject["valueCodeableConcept"]["text"].ToString();
+            DateTime dateTime = jObject["effectiveDateTime"].ToObject<DateTime>();
+            return _observationFactory.CreateTobacco(id, value, dateTime);
+        }
+
+        public Observation[] ParseBloodPressure(JObject jObject)
+        {
+            string id = jObject["id"].ToString();
+            string diastolic = jObject["component"][0]["valueQuantity"]["value"].ToString();
+            string systolic = jObject["component"][1]["valueQuantity"]["value"].ToString();
+            string[] values = new string[] { diastolic, systolic };
+            DateTime dateTime = jObject["effectiveDateTime"].ToObject<DateTime>();
+            return _observationFactory.CreateBloodPressure(id, values, dateTime);
         }
 
     }
