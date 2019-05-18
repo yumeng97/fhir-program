@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using project.Models;
+using project.Repositories;
 
 namespace project.Observables
 {
@@ -10,12 +11,19 @@ namespace project.Observables
     {
         private List<IObserver<Observation>> observers;
         private List<Observation> observations;
-        public string patientId { get; set; }
+        private ObservationRepository observationRepository;
+        private bool monitoringPressure = false;
+        private bool monitoringCholesterol = false;
+        private bool monitoringTobacco = false;
+        public string PatientId { get; set; }
 
-        public ObservationMonitor()
+
+        public ObservationMonitor(string patientId)
         {
+            PatientId = patientId;
             observers = new List<IObserver<Observation>>();
             observations = new List<Observation>();
+            ObservationCollection.observationMonitors.Add(patientId, this);
         }
         public IDisposable Subscribe(IObserver<Observation> observer)
         {
@@ -43,6 +51,58 @@ namespace project.Observables
             {
                 if (!(_observer == null)) _observers.Remove(_observer);
             }
-        } 
+        }
+
+        public void StartMonitorPressure()
+        {
+            monitoringPressure = true;
+        }
+
+        public void StartMonitorCholesterol()
+        {
+            monitoringCholesterol = true;
+        }
+
+        public void StartMonitorTobacco()
+        {
+            monitoringTobacco = true;
+        }
+        
+        public async void GetObservationsAsync()
+        {
+            if (monitoringPressure)
+            {
+                var retrievedObservations = await observationRepository.GetByPatientAndBloodPressure(PatientId);
+                foreach (var o in retrievedObservations)
+                {
+                    if (observations.Select(observation => observation.Id == o.Id).ToList().Count() == 0)
+                    {
+                        observations.Add(o);
+                    }
+                }
+            }
+            if (monitoringCholesterol)
+            {
+                var retrievedObservations = await observationRepository.GetByPatientAndTotalCholesterol(PatientId);
+                foreach (var o in retrievedObservations)
+                {
+                    if (observations.Select(observation => observation.Id == o.Id).ToList().Count() == 0)
+                    {
+                        observations.Add(o);
+                    }
+                }
+            }
+            if (monitoringTobacco)
+            {
+                var retrievedObservations = await observationRepository.GetByPatientAndTobacco(PatientId);
+                foreach (var o in retrievedObservations)
+                {
+                    if (observations.Select(observation => observation.Id == o.Id).ToList().Count() == 0)
+                    {
+                        observations.Add(o);
+                    }
+                }
+            }
+        }
     }
 }
