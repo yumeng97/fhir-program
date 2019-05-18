@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using project.Models;
 using project.Queries;
+using project.Observables;
 
 namespace project.Repositories
 {
@@ -50,6 +51,13 @@ namespace project.Repositories
         public void UpdateMonitorByIdAndPatientIdList(string id, List<string> patientIds)
         {
             PractitionerMonitorCollection.Update(id, patientIds);
+        }
+
+        public void TestMonitorReporter()
+        {
+           // ObservationMonitor provider = new ObservationMonitor();
+            ObservationReporter observer1 = new ObservationReporter();
+
         }
     }
 }

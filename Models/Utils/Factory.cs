@@ -7,26 +7,26 @@ namespace project.Models.Utils
 {
     public class ObservationFactory
     {
-        public static readonly string CHOLESTEROL = "2093-3";
-        public static readonly string SYSTOLIC = "8480-6";
-        public static readonly string DIASTOLIC = "8462-4";
-        public static readonly string TOBACCO = "72166-2";
-        public Observation[] CreateBloodPressure(string patientId, string[] values, DateTime dateTime)
+        public static readonly string CHOLESTEROL = "Cholesterol";
+        public static readonly string SYSTOLIC = "Systolic Blood Pressure";
+        public static readonly string DIASTOLIC = "Diastolic Blood Pressure";
+        public static readonly string TOBACCO = "Tobacco";
+        public Observation[] CreateBloodPressure(string id, string[] values, DateTime dateTime)
         {
-            Observation diastolic = new Observation(patientId, values[0], Observation.ObservationType.DiastolicBloodPressure, dateTime);
-            Observation systolic = new Observation(patientId, values[1], Observation.ObservationType.SystolicBloodPressure, dateTime);
+            Observation diastolic = new Observation(id, values[0], DIASTOLIC, dateTime);
+            Observation systolic = new Observation(id, values[1], SYSTOLIC, dateTime);
             Observation[] bloodPressure = new Observation[] { diastolic, systolic };
             return bloodPressure;
         }
 
-        public Observation CreateCholesterol(string patientId, string value, DateTime dateTime)
+        public Observation CreateCholesterol(string id, string value, DateTime dateTime)
         {
-           return new Observation(patientId, value, Observation.ObservationType.Cholesterol, dateTime);
+           return new Observation(id, value, CHOLESTEROL, dateTime);
         }
 
-        public Observation CreateTobacco(string patientId, string value, DateTime dateTime)
+        public Observation CreateTobacco(string id, string value, DateTime dateTime)
         {
-            return new Observation(patientId, value, Observation.ObservationType.Tobacco, dateTime);
+            return new Observation(id, value, TOBACCO, dateTime);
         }
     }
 }
