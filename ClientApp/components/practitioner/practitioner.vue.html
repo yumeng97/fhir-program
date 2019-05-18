@@ -47,9 +47,9 @@
                     <td>{{ item.lastUpdated }}</td>
                     <td> <table class="table">
                          <tr v-for="chol in item.observations">
-                             <td>ID: {{ chol.patientId }}</td>
+                             <td>ID: {{ chol.id }}</td>
                              <td>Date: {{ chol.effectiveDateTime }}</td>
-                             <td>Cholesterol: {{ chol.totalCholesterol }}</td>
+                             <td>{{ chol.type }}: {{ chol.value }}</td>
                          </tr>
                          </table></td>
                     <td>
