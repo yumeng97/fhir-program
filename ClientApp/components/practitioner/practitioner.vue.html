@@ -46,7 +46,7 @@
                     <td>{{ item.address.line + " " + item.address.city + " " + item.address.state + " " + item.address.postalCode + " " + item.address.country }}</td>
                     <td>{{ item.lastUpdated }}</td>
                     <td> <table class="table">
-                         <tr v-for="chol in item.observations">
+                         <tr v-for="chol in item.observations.filter(o => o.type == 'Systolic Blood Pressure')">
                              <td>ID: {{ chol.id }}</td>
                              <td>Date: {{ chol.effectiveDateTime }}</td>
                              <td>{{ chol.type }}: {{ chol.value }}</td>

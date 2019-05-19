@@ -11,6 +11,12 @@ namespace project.Observables
         private IDisposable unsubscriber;
         private bool first = true;
         private Observation last;
+        public string PractitionerId { get; set; }
+
+        public ObservationReporter(string practitionerId)
+        {
+            PractitionerId = practitionerId;
+        }
 
         public virtual void Subscribe(IObservable<Observation> provider)
         {

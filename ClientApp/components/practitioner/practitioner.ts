@@ -16,7 +16,15 @@ interface Patient {
     name: string
     gender: string,
     address: string,
-    lastUpdated: string
+    lastUpdated: string,
+    observations: Observations[]
+}
+
+interface Observations {
+    id: string,
+    type: string,
+    value: string,
+    effectiveDateTime: string
 }
 
 @Component

@@ -56,7 +56,7 @@ namespace project.Repositories
         public void TestMonitorReporter()
         {
            // ObservationMonitor provider = new ObservationMonitor();
-            ObservationReporter observer1 = new ObservationReporter();
+           // ObservationReporter observer1 = new ObservationReporter();
 
         }
     }

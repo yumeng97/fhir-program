@@ -64,9 +64,13 @@ namespace project.Services
             /// </summary>
             /// <param name="id"> Patient ID </param>
             /// <returns> A collection of Observation </returns>
-            public async Task<IEnumerable<Observation>> GetObservationById(string id)
+        public async Task<IEnumerable<Observation>> GetObservationById(string id)
         {
-            return await ObservationRepository.GetByPatientAndTotalCholesterol(id);
+            List<Observation> observations = (List<Observation>) await ObservationRepository.GetByPatientAndBloodPressure(id);
+            observations.AddRange(await ObservationRepository.GetByPatientAndTotalCholesterol(id));
+            observations.AddRange(await ObservationRepository.GetByPatientAndTobacco(id));
+            Console.WriteLine(observations);
+            return observations;
         }
 
         /// <summary>

@@ -15,8 +15,8 @@ namespace project.Repositories
         private readonly ObservationQuery ObservationQuery = new ObservationQuery();
         private readonly string ArgumentStart = "?";
         private readonly string TotalCholesterolArg = "code=http://loinc.org|2093-3";
-        private readonly string BloodPressureArg = "code=http://loinc.org|72166-2";
-        private readonly string TobaccoArg = "code=http://loinc.org|55284-4";
+        private readonly string TobaccoArg = "code=http://loinc.org|72166-2";
+        private readonly string BloodPressureArg = "code=http://loinc.org|55284-4";
         private readonly string PatientArg = "patient=Patient/";
 
         /// <summary>
