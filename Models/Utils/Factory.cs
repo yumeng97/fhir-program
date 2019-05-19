@@ -8,7 +8,7 @@ namespace project.Models.Utils
     public class ObservationFactory
     {
         private string diastolicSubId = "/1";
-        private string systolicSubId = "/1";
+        private string systolicSubId = "/2";
         public Observation[] CreateBloodPressure(string id, string[] values, DateTime dateTime)
         {
             Observation diastolic = new Observation(id + diastolicSubId, values[0], Observation.DIASTOLIC, dateTime);
