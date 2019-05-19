@@ -46,7 +46,7 @@
                     <td>{{ item.address.line + " " + item.address.city + " " + item.address.state + " " + item.address.postalCode + " " + item.address.country }}</td>
                     <td>{{ item.lastUpdated }}</td>
                     <td> <table class="table">
-                         <tr v-for="chol in item.observations.filter(o => o.type == 'Systolic Blood Pressure')">
+                         <tr v-for="chol in item.observations"> 
                              <td>ID: {{ chol.id }}</td>
                              <td>Date: {{ chol.effectiveDateTime }}</td>
                              <td>{{ chol.type }}: {{ chol.value }}</td>
@@ -69,6 +69,7 @@
                     <th>Address</th>
                     <th>Last Updated</th>
                     <th>Total Observation Count</th>
+                    <th>Monitor Cholesterol</th>
 
                 </tr>
             </thead>
@@ -79,7 +80,7 @@
                     <td>{{ item.gender }}</td>
                     <td>{{ item.address.line + " " + item.address.city + " " + item.address.state + " " + item.address.postalCode + " " + item.address.country }}</td>
                     <td>{{ item.lastUpdated }}</td>
-                    <td>{{ item.observations.length }}</td>
+             <!--       <td>{{ item.observations.length }}</td> -->
                     <td>
                         <button @click="addToMonitored(item.id)"> Add </button>
                     </td>

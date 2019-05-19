@@ -102,12 +102,12 @@ export default class PractitionerListComponent extends Vue {
     autoRefresh(id: string) {
         setInterval(() => {
             this.getMonitored(id);
-        }, 3600000)
+        }, 10600)
     }
  
 
     addToMonitored(patientId: string) {
-        let url = 'api/Practitioner/AddPatientMonitor/' + this.$route.params.id + '/' + patientId;
+        let url = 'api/Practitioner/AddPatientMonitor/' + this.$route.params.id + '/' + patientId + '/' + '0';
         axios({
             method: 'put',
             url: url

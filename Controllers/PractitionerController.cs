@@ -42,10 +42,10 @@ namespace project.Controllers
         /// </summary>
         /// <param name="id"> Practitioner ID </param>
         /// <param name="patientId"> Patient ID </param>
-        [HttpPut("[action]/{id}/{patientId}")]
-        public void AddPatientMonitor(string id, string patientId)
+        [HttpPut("[action]/{id}/{patientId}/{type}")]
+        public void AddPatientMonitor(string id, string patientId, string type)
         {
-            PractitionerService.AddPatientMonitor(id, patientId);
+            PractitionerService.AddPatientMonitor(id, patientId, Observation.GetTypeByCode(type));
         }
 
         /// <summary>
@@ -53,10 +53,10 @@ namespace project.Controllers
         /// </summary>
         /// <param name="id"> Practitioner ID </param>
         /// <param name="patientId"> Patient ID </param>
-        [HttpPut("[action]/{id}/{patientId}")]
-        public void DeletePatientMonitor(string id, string patientId)
+        [HttpPut("[action]/{id}/{patientId}/{type}")]
+        public void DeletePatientMonitor(string id, string patientId, string type)
         {
-            PractitionerService.DeletePatientMonitor(id, patientId);
+            PractitionerService.DeletePatientMonitor(id, patientId, Observation.GetTypeByCode(type));
         }
     }
 }

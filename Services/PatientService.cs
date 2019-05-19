@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using project.Repositories;
 using project.Models;
+using project.Observables;
 
 namespace project.Services
 {
@@ -42,9 +43,21 @@ namespace project.Services
         /// <returns> A collection of Patient </returns>
         public async Task<IEnumerable<IPatient>> GetMonitoredByPractitionerId(string practitionerId)
         {
-            var practitioner = await PractitionerRepository.GetByIdAsync(practitionerId);
-            return practitioner.MonitoredPatients.Select(id => PatientRepository.GetByIdAsync(id))
-                                                 .Select(p => p.Result);
+            List<IPatient> patients = new List<IPatient>();
+            if (ObservationCollection.MonitoredPatientsByPractitioner.ContainsKey(practitionerId))
+            {
+                foreach (var patientId in ObservationCollection.MonitoredPatientsByPractitioner[practitionerId])
+                {
+                    var p = await PatientRepository.GetByIdAsync(patientId);
+                    patients.Add(p);
+                }
+                foreach (var p in patients)
+                {
+                    p.Observations = ObservationCollection.Observations[p.Id][practitionerId];
+                }
+            }
+
+            return patients;
         }
 
         /// <summary>
@@ -54,9 +67,23 @@ namespace project.Services
         /// <returns> A collection of Patient </returns>
         public async Task<IEnumerable<IPatient>> GetNotMonitoredByPractitionerId(string practitionerId)
         {
-            var practitioner = await PractitionerRepository.GetByIdAsync(practitionerId);
             var patients = await PatientRepository.GetAllAsync();
-            return patients.Where(patient => !practitioner.MonitoredPatients.Contains(patient.Id));
+            var newPatients = new List<IPatient>();
+            foreach (var p in patients)
+            {
+                if (! (ObservationCollection.Observations.ContainsKey(p.Id)))
+                {
+                    newPatients.Add(p);
+                }
+                else
+                {
+                    if (! (ObservationCollection.Observations[p.Id].ContainsKey(practitionerId)))
+                    {
+                        newPatients.Add(p);
+                    }
+                }
+            }
+            return newPatients;
         }
 
             /// <summary>
@@ -69,7 +96,6 @@ namespace project.Services
             List<Observation> observations = (List<Observation>) await ObservationRepository.GetByPatientAndBloodPressure(id);
             observations.AddRange(await ObservationRepository.GetByPatientAndTotalCholesterol(id));
             observations.AddRange(await ObservationRepository.GetByPatientAndTobacco(id));
-            Console.WriteLine(observations);
             return observations;
         }
 

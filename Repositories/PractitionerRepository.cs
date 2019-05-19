@@ -26,10 +26,6 @@ namespace project.Repositories
             string argument = ArgumentStart + "_id=" + id;
             var practitioners = await PractitionerQuery.GetPractitionersAsync(argument);
             var practitioner = practitioners.ElementAt(0);
-            if (PractitionerMonitorCollection.Exist(id))
-            {
-                practitioner.MonitoredPatients = PractitionerMonitorCollection.Get(id);
-            }
             return practitioner;
         }
 
@@ -42,22 +38,5 @@ namespace project.Repositories
             return await PractitionerQuery.GetPractitionersAsync();
         }
 
-
-        /// <summary>
-        /// Update the cache monitor patient
-        /// </summary>
-        /// <param name="id"> practitioner id </param>
-        /// <param name="patientIds"> a list of patient ids </param>
-        public void UpdateMonitorByIdAndPatientIdList(string id, List<string> patientIds)
-        {
-            PractitionerMonitorCollection.Update(id, patientIds);
-        }
-
-        public void TestMonitorReporter()
-        {
-           // ObservationMonitor provider = new ObservationMonitor();
-           // ObservationReporter observer1 = new ObservationReporter();
-
-        }
     }
 }

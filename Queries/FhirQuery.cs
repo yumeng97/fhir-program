@@ -117,9 +117,12 @@ namespace project.Queries
                             observations.Add(observationParser.ParseTobacco(toParse));
                             break;
                         case Observation.ObservationType.BloodPressure:
-                            foreach (var b in observationParser.ParseBloodPressure(toParse))
+                            if (toParse["component"][0]["valueQuantity"] != null)
                             {
-                                observations.Add(b);
+                                foreach (var b in observationParser.ParseBloodPressure(toParse))
+                                {
+                                    observations.Add(b);
+                                }
                             }
                             break;
                     }

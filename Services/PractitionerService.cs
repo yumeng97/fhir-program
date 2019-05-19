@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using project.Repositories;
 using project.Models;
+using project.Observables;
 
 namespace project.Services
 {
@@ -33,28 +34,41 @@ namespace project.Services
             return await PractitionerRepository.GetAllAsync();
         }
 
-        /// <summary>
-        /// Add to monitor
-        /// </summary>
-        /// <param name="id"> Practitioner ID </param>
-        /// <param name="patientId"> Patient ID </param>
-        public async void AddPatientMonitor(string id, string patientId)
+        public void AddPatientMonitor(string id, string patientId, string type)
         {
-            var practitioner = await PractitionerRepository.GetByIdAsync(id);
-            practitioner.AddToMonitored(patientId);
-            PractitionerRepository.UpdateMonitorByIdAndPatientIdList(id, practitioner.MonitoredPatients);
+            if (ObservationCollection.ObservationMonitors.ContainsKey(patientId))
+            {
+                if (ObservationCollection.ObservationReporters[patientId].ContainsKey(id))
+                {
+                    var provider = ObservationCollection.ObservationMonitors[patientId];
+                    var observer = ObservationCollection.ObservationReporters[patientId][id];
+                    provider.StartMonitor(type);
+                    observer.StartMonitor(type);
+                    provider.Subscribe(observer);
+                }
+                else
+                {
+                    var provider = ObservationCollection.ObservationMonitors[patientId];
+                    var observer = new ObservationReporter(id, patientId);
+                    provider.StartMonitor(type);
+                    observer.StartMonitor(type);
+                    provider.Subscribe(observer);
+                }
+            }
+            else
+            {
+                var provider = new ObservationMonitor(patientId);
+                var observer = new ObservationReporter(id, patientId);
+                provider.StartMonitor(type);
+                observer.StartMonitor(type);
+                provider.Subscribe(observer);
+            }
         }
 
-        /// <summary>
-        /// Remove from monitor
-        /// </summary>
-        /// <param name="id"> Practitioner ID </param>
-        /// <param name="patientId"> Patient ID </param>
-        public async void DeletePatientMonitor(string id, string patientId)
+        public void DeletePatientMonitor(string id, string patientId, string type)
         {
-            var practitioner = await PractitionerRepository.GetByIdAsync(id);
-            practitioner.RemoveFromMonitored(patientId);
-            PractitionerRepository.UpdateMonitorByIdAndPatientIdList(id, practitioner.MonitoredPatients);
+            var observer = ObservationCollection.ObservationReporters[patientId][id];
+            observer.Unsubscribe(type);
         }
     }
 }

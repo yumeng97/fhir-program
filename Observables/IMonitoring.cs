@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace project.Models
+namespace project.Observables
 {
-    public interface IPractitioner : IUser
+    public interface IMonitoring
     {
-        bool Active { get; set; }
+        void StartMonitor(string type);
     }
 }
